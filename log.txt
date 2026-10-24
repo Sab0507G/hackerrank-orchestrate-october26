@@ -257,3 +257,25 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:30:50+05:30] Request-intent classification and no-evidence handling
+
+User Prompt (verbatim, secrets redacted):
+ok do
+
+Agent Response Summary:
+Replaced the NOT_APPLICABLE rule (absence of evidence) with a request-intent check. A request is deletion-authorized unless it matches narrow non-deletion phrasing (access, export, correction, marketing opt-out, login reset, and similar). Authorized deletions with no matching evidence now return COMPLETE with an empty step list rather than NOT_APPLICABLE. This fixed two wrongly NOT_APPLICABLE deletion requests (case_525, case_61). The non-deletion patterns were narrowed after three sample false blocks; that is partly sample-informed, and the patterns are generic phrasing rather than case IDs. Sample status accuracy rose from 18/32 to 21/32. The account-to-user link for deleted accounts is still not derivable without a shortcut, so I did not add one.
+
+Actions:
+* Added code/request_intent.py
+* Updated code/pipeline.py (intent gate, no-evidence COMPLETE)
+* Scored sample status and steps (inline Python)
+* python3 code/main.py (regenerated output.csv)
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

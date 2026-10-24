@@ -5,6 +5,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from identity import IdentityIndex, load_catalog_links
+from request_intent import is_deletion_request
 from evidence import Evidence
 from rules import classify_resource, build_steps, serialize, RETAIN_CATEGORIES, STATE_OF as _STATE_OF
 
@@ -59,6 +60,9 @@ def _classify(rid, info):
 
 
 def decide(request, idx, ev, links, classify_nonde=frozenset()):
+    # Deletion must be authorized by the request text; evidence alone never makes a case deletion.
+    if not is_deletion_request(request["request_text"]):
+        return "NOT_APPLICABLE", []
     uid = sorted(idx.resolve(request["email"]))[0]
     I = idx.identifiers(uid, request["audit_at"])
     idents = {
@@ -122,8 +126,6 @@ def decide(request, idx, ev, links, classify_nonde=frozenset()):
                              "operation": "REPORT_REMAINING_RECORD", "evidence_id": evid})
 
     status = "INCOMPLETE" if findings else "COMPLETE"
-    if not res:
-        status = "NOT_APPLICABLE"
     steps = build_steps(findings, verifications, status)
     return status, steps
 
