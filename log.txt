@@ -322,3 +322,27 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:36:34+05:30] Held-out split, live-connector and presence rules
+
+User Prompt (verbatim, secrets redacted):
+yes
+
+Agent Response Summary:
+Split the sample into development (cases 01-16, used for tuning) and held-out (17-32). Added three general rules: data_flow_ resources are DATA_FLOW and a live connector flag in a linked log line marks them active; a log lookup with rows>=1 or marker_found=false shows the record still exists. Overall sample status 26/32 (dev 16/16, held-out 10/16). The held-out cases were printed during development, so the held-out figure is contaminated; this is stated in the report. Regenerated output.csv (518 rows, validated), rewrote evaluation_report.md from metrics.json, rebuilt code.zip. Remaining held-out misses were not fixed, to avoid tuning on them.
+
+Actions:
+* Patched code/rules.py, code/evidence.py, code/pipeline.py
+* Updated code/evaluation/evaluate.py (dev/held-out split)
+* python3 code/evaluation/evaluate.py
+* python3 code/main.py (regenerated output.csv)
+* Rewrote code/evaluation/evaluation_report.md from metrics
+* Rebuilt /mnt/attach/outputs/code.zip
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

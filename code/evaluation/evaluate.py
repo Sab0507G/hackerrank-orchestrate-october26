@@ -66,6 +66,14 @@ def score_sample():
         per_case[cid] = {"gold": gs, "pred": ps, "steps_gold": len(gsteps), "steps_pred": len(psteps)}
 
     n = len(gold)
+    dev_ids = [f"case_{i:02d}" for i in range(1, 17)]
+    test_ids = [f"case_{i:02d}" for i in range(17, 33)]
+    split = {
+        "dev_status_correct": sum(pred[c][0] == gold[c][0] for c in dev_ids),
+        "dev_cases": len(dev_ids),
+        "heldout_status_correct": sum(pred[c][0] == gold[c][0] for c in test_ids),
+        "heldout_cases": len(test_ids),
+    }
     precision = tp / (tp + fp) if (tp + fp) else 0.0
     recall = tp / (tp + fn) if (tp + fn) else 0.0
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
@@ -78,6 +86,7 @@ def score_sample():
         "step_f1": round(f1, 4),
         "field_accuracy_on_matched_steps": round(field_ok / field_total, 4) if field_total else 0.0,
         "sequence_accuracy": round(seq_ok / n, 4),
+        "split": split,
         "status_confusion_gold_to_pred": confusion,
         "per_case": per_case,
     }
@@ -122,6 +131,9 @@ def main():
     out = HERE / "metrics.json"
     out.write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"sample status accuracy: {sample['status_correct']}/{sample['cases']} ({sample['status_accuracy']:.1%})")
+    s = sample["split"]
+    print(f"  dev (cases 01-16, used for tuning): {s['dev_status_correct']}/{s['dev_cases']}")
+    print(f"  held-out (cases 17-32, viewed during development, not a clean estimate): {s['heldout_status_correct']}/{s['heldout_cases']}")
     print(f"step precision/recall/F1: {sample['step_precision']:.3f} / {sample['step_recall']:.3f} / {sample['step_f1']:.3f}")
     print(f"field accuracy (matched steps): {sample['field_accuracy_on_matched_steps']:.3f}")
     print(f"sequence accuracy: {sample['sequence_accuracy']:.3f}")

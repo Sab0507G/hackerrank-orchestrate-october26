@@ -80,6 +80,18 @@ def extract_text(dataset_dir: Path, file_row: dict) -> str:
 
 USER_ID_RE = re.compile(r"\buser_\d+\b", re.IGNORECASE)
 
+LIVE_FLOW_RE = re.compile(r"\b(enabled=true|scheduler_registered=true)\b")
+ROWS_RE = re.compile(r"\brows=(\d+)\b")
+MARKER_NOT_FOUND_RE = re.compile(r"\bmarker_found=false\b")
+
+
+def _log_shows_present(line: str) -> bool:
+    """A lookup that returned rows, or a deletion marker that was not found, means the record still exists."""
+    m = ROWS_RE.search(line)
+    if m and int(m.group(1)) >= 1:
+        return True
+    return bool(MARKER_NOT_FOUND_RE.search(line))
+
 RESOURCE_ID_RE = re.compile(r"\b([a-z]+(?:_[a-z]+)*_\d+)\b")
 
 
@@ -275,6 +287,8 @@ class Evidence:
             if found:
                 rids = RESOURCE_ID_RE.findall(line)
                 hits.append({
+                    "active": bool(LIVE_FLOW_RE.search(line)),
+                    "present": _log_shows_present(line),
                     "file_id": file_row["file_id"],
                     "source": "text",
                     "table": None,
@@ -309,6 +323,8 @@ class Evidence:
                     rids = RESOURCE_ID_RE.findall(line)
                     if rids:
                         extra.append({
+                            "active": bool(LIVE_FLOW_RE.search(line)),
+                    "present": _log_shows_present(line),
                             "file_id": f["file_id"],
                             "source": "text_trace",
                             "table": None,

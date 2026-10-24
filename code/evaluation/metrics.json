@@ -1,17 +1,23 @@
 {
   "sample": {
     "cases": 32,
-    "status_accuracy": 0.6562,
-    "status_correct": 21,
-    "step_precision": 0.8362,
-    "step_recall": 0.5026,
-    "step_f1": 0.6278,
-    "field_accuracy_on_matched_steps": 0.8969,
+    "status_accuracy": 0.8125,
+    "status_correct": 26,
+    "step_precision": 0.7698,
+    "step_recall": 0.5544,
+    "step_f1": 0.6446,
+    "field_accuracy_on_matched_steps": 0.9299,
     "sequence_accuracy": 0.0312,
+    "split": {
+      "dev_status_correct": 16,
+      "dev_cases": 16,
+      "heldout_status_correct": 10,
+      "heldout_cases": 16
+    },
     "status_confusion_gold_to_pred": {
       "COMPLETE->COMPLETE": 7,
-      "INCOMPLETE->INCOMPLETE": 14,
-      "INCOMPLETE->COMPLETE": 8,
+      "INCOMPLETE->INCOMPLETE": 19,
+      "INCOMPLETE->COMPLETE": 3,
       "COMPLETE->INCOMPLETE": 3
     },
     "per_case": {
@@ -71,9 +77,9 @@
       },
       "case_10": {
         "gold": "INCOMPLETE",
-        "pred": "COMPLETE",
+        "pred": "INCOMPLETE",
         "steps_gold": 4,
-        "steps_pred": 1
+        "steps_pred": 3
       },
       "case_11": {
         "gold": "INCOMPLETE",
@@ -83,7 +89,7 @@
       },
       "case_12": {
         "gold": "INCOMPLETE",
-        "pred": "COMPLETE",
+        "pred": "INCOMPLETE",
         "steps_gold": 5,
         "steps_pred": 3
       },
@@ -101,9 +107,9 @@
       },
       "case_15": {
         "gold": "INCOMPLETE",
-        "pred": "COMPLETE",
+        "pred": "INCOMPLETE",
         "steps_gold": 5,
-        "steps_pred": 2
+        "steps_pred": 6
       },
       "case_16": {
         "gold": "INCOMPLETE",
@@ -119,7 +125,7 @@
       },
       "case_18": {
         "gold": "INCOMPLETE",
-        "pred": "COMPLETE",
+        "pred": "INCOMPLETE",
         "steps_gold": 14,
         "steps_pred": 3
       },
@@ -131,9 +137,9 @@
       },
       "case_20": {
         "gold": "INCOMPLETE",
-        "pred": "COMPLETE",
+        "pred": "INCOMPLETE",
         "steps_gold": 8,
-        "steps_pred": 1
+        "steps_pred": 3
       },
       "case_21": {
         "gold": "COMPLETE",
@@ -169,31 +175,31 @@
         "gold": "COMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 6,
-        "steps_pred": 6
+        "steps_pred": 9
       },
       "case_27": {
         "gold": "COMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 6,
-        "steps_pred": 6
+        "steps_pred": 9
       },
       "case_28": {
         "gold": "COMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 6,
-        "steps_pred": 6
+        "steps_pred": 9
       },
       "case_29": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 14,
-        "steps_pred": 9
+        "steps_pred": 12
       },
       "case_30": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 14,
-        "steps_pred": 9
+        "steps_pred": 12
       },
       "case_31": {
         "gold": "COMPLETE",

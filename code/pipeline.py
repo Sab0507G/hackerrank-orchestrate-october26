@@ -45,6 +45,10 @@ def _case_resources(uid, audit_at, idents, ev, links):
             info["category"] = HANDOVER_CATEGORY.get(h["table"], info["category"])
         elif h.get("exposed") or h.get("source") == "json":
             info["exposed"] = True
+        if h.get("active"):
+            info["active"] = True
+        if h.get("present"):
+            info["exposed"] = True
     for rid, ls in links.items():
         if any(u == uid and t <= audit_at for t, u in ls):
             res[rid]["file_ids"]  # linked resource, presence evaluated below
@@ -97,6 +101,8 @@ def decide(request, idx, ev, links, classify_nonde=frozenset()):
                                   "evidence_id": evid})
             continue
         exposed = (state in EXPOSED_STATES) if state else info["exposed"]
+        if category == "DATA_FLOW" and info.get("active"):
+            exposed = True
         if state in TREATED_STATES:
             treated_op = {"ANONYMIZED": "VERIFY_RECORD_ANONYMIZED", "REDACTED": "VERIFY_RECORD_REDACTED",
                           "BLOCKED": "VERIFY_RESTORE_BLOCKED", "DISABLED": "VERIFY_DATA_FLOW_DISABLED"}[state]

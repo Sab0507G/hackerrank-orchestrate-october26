@@ -41,7 +41,7 @@ PREFIX_CATEGORY = [
     ("audit_record_", "security_service", "SECURITY_AUDIT_LOG"),
     ("legal_", "legal_service", "LEGAL_HOLD_RECORD"),
     ("backup_", "backup_service", "BACKUP_ARCHIVE"),
-    ("data_flow_", "integration_service", "SECONDARY_IDENTIFIER"),
+    ("data_flow_", "integration_service", "DATA_FLOW"),
     ("cache_", "cache_service", "CACHE_ENTRY"),
 ]
 
