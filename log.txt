@@ -234,3 +234,26 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:29:11+05:30] PDF and image evidence parsing
+
+User Prompt (verbatim, secrets redacted):
+no I just want it should complete and we have good score as result is announced on 27
+
+Agent Response Summary:
+Added PDF text extraction (pdftotext) and screenshot OCR (tesseract) with a local cache, word-boundary user-id matching, and document-level resource extraction for PDF and image evidence. Sample status accuracy rose from 17/32 to 18/32. Remaining gaps: 8 cases missing findings, 3 COMPLETE cases with no evidence, and 3 false findings. Regenerated output.csv (518 rows, validated). Did not fit to sample answers.
+
+Actions:
+* Patched code/evidence.py (extract_text, find_document_hits, USER_ID_RE)
+* Extracted PDF and OCR text to scratchpad for inspection (outside repo)
+* Scored sample status and steps (inline Python)
+* python3 code/main.py (regenerated output.csv)
+* Updated .gitignore to exclude __pycache__ and .cache
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

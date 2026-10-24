@@ -11,6 +11,7 @@ import csv
 import json
 import re
 import sqlite3
+import subprocess
 from pathlib import Path
 
 from identity import norm_email, norm_phone
@@ -52,6 +53,32 @@ def _trace_ids(line: str):
 HANDOVER_RE = re.compile(
     r"^-\s*(?P<ts>\S+)\s*\|\s*(?P<system>[^|]+?)\s*\|\s*(?P<rid>[^|]+?)\s*\|\s*(?P<category>[^|]+?)\s*\|\s*(?P<state>[^|]+?)\s*\|\s*(?P<ident>\S+)\s*$"
 )
+
+
+CACHE_DIR = Path(__file__).resolve().parent / ".cache" / "extracted"
+
+
+def extract_text(dataset_dir: Path, file_row: dict) -> str:
+    """Text for a .log/.txt/.pdf/.png evidence file. PDFs use pdftotext, images use tesseract (cached)."""
+    rel = file_row["file_path"]
+    path = Path(dataset_dir) / rel
+    if rel.endswith((".log", ".txt")):
+        return path.read_text(encoding="utf-8", errors="replace")
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cached = CACHE_DIR / (file_row["file_id"] + ".txt")
+    if cached.exists():
+        return cached.read_text(encoding="utf-8", errors="replace")
+    if rel.endswith(".pdf"):
+        subprocess.run(["pdftotext", "-layout", str(path), str(cached)], check=True)
+    elif rel.endswith(".png"):
+        base = CACHE_DIR / file_row["file_id"]
+        subprocess.run(["tesseract", str(path), str(base)], check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    else:
+        return ""
+    return cached.read_text(encoding="utf-8", errors="replace") if cached.exists() else ""
+
+USER_ID_RE = re.compile(r"\buser_\d+\b", re.IGNORECASE)
 
 RESOURCE_ID_RE = re.compile(r"\b([a-z]+(?:_[a-z]+)*_\d+)\b")
 
@@ -178,12 +205,42 @@ class Evidence:
         walk(data, {})
         return hits
 
-    def find_text_hits(self, file_row, idents):
+    def find_document_hits(self, file_row, idents):
+        """PDF/image evidence: if the document is about the user, every resource id it names belongs to them."""
         hits = []
-        path = self.dataset_dir / file_row["file_path"]
         try:
-            lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
-        except OSError:
+            text = extract_text(self.dataset_dir, file_row)
+        except (OSError, subprocess.CalledProcessError):
+            return hits
+        low = text.lower()
+        about_user = any(e in low for e in idents["emails"] if e) or any(
+            h in low for h in idents["email_hashes"] if h) or any(
+            m.group(0).lower() in idents["user_ids"] for m in USER_ID_RE.finditer(text))
+        if not about_user:
+            return hits
+        exposed = any(e in low for e in idents["emails"] if e) or any(
+            p and len(p) >= 7 and p in norm_phone(text) for p in idents["phones"])
+        rids = list(dict.fromkeys(RESOURCE_ID_RE.findall(text)))
+        for rid in rids:
+            hits.append({
+                "file_id": file_row["file_id"],
+                "source": "document",
+                "table": None,
+                "resource_id": rid,
+                "resource_ids": rids,
+                "exposed": exposed,
+                "line_no": None,
+                "line": "",
+            })
+        return hits
+
+    def find_text_hits(self, file_row, idents):
+        if file_row["file_path"].endswith((".pdf", ".png")):
+            return self.find_document_hits(file_row, idents)
+        hits = []
+        try:
+            lines = extract_text(self.dataset_dir, file_row).splitlines()
+        except (OSError, subprocess.CalledProcessError):
             return hits
         for lineno, line in enumerate(lines, 1):
             hm = HANDOVER_RE.match(line.strip())
@@ -205,7 +262,7 @@ class Evidence:
             low = line.lower()
             found = any(e in low for e in idents["emails"] if e) or any(
                 h in low for h in idents["email_hashes"] if h
-            ) or any(u in low for u in idents["user_ids"] if u)
+            ) or any(m.group(0).lower() in idents["user_ids"] for m in USER_ID_RE.finditer(line))
             if not found:
                 digits_line = norm_phone(line)
                 found = any(p and len(p) >= 7 and p in digits_line for p in idents["phones"])
@@ -270,6 +327,6 @@ class Evidence:
                 hits.extend(self.find_sql_hits(f, idents))
             elif p.endswith(".json"):
                 hits.extend(self.find_json_hits(f, idents))
-            elif p.endswith(".log") or p.endswith(".txt"):
+            elif p.endswith((".log", ".txt", ".pdf", ".png")):
                 hits.extend(self.find_text_hits(f, idents))
         return self.propagate_traces(audit_at, hits)
