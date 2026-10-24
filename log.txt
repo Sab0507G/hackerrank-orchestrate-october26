@@ -93,3 +93,24 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:18:16+05:30] Scanner: nested JSON and trace propagation
+
+User Prompt (verbatim, secrets redacted):
+do
+
+Agent Response Summary:
+Extended the evidence scanner to match identifiers inside JSON payload columns in SQL and inside structured JSON log lines, then added trace-id propagation so log lines sharing a trace with a matched line are attributed to the same user. Sample resource recall on should-be-present resources rose from 42/67 to 51/67 (76%). Remaining misses are mostly analytics records linked only by deletion-worker activity, plus case_09 audit_record_4902, whose linking trace is captured after audit_at; the scanner excludes it correctly, and the gold answer appears to rely on that later evidence, which is noted as a conflict.
+
+Actions:
+* Patched code/evidence.py (_deep_match, JSON log parsing, propagate_traces)
+* Measured sample recall (inline script)
+* Appended this log entry
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

@@ -15,6 +15,40 @@ from pathlib import Path
 
 from identity import norm_email, norm_phone
 
+
+
+def _parse_json_maybe(text):
+    if not isinstance(text, str):
+        return None
+    s = text.strip()
+    if not (s.startswith("{") or s.startswith("[")):
+        return None
+    try:
+        return json.loads(s)
+    except json.JSONDecodeError:
+        return None
+
+
+def _deep_match(obj, idents, _depth=0) -> bool:
+    """True if any leaf value in obj (recursively, including JSON-encoded strings) is an identifier."""
+    if _depth > 12:
+        return False
+    if isinstance(obj, dict):
+        return any(_deep_match(v, idents, _depth + 1) for v in obj.values())
+    if isinstance(obj, list):
+        return any(_deep_match(v, idents, _depth + 1) for v in obj)
+    if isinstance(obj, str):
+        parsed = _parse_json_maybe(obj)
+        if parsed is not None:
+            return _deep_match(parsed, idents, _depth + 1)
+    return Evidence._matches(obj, idents)
+
+TRACE_RE = re.compile(r'trace_id(?:=|"\s*:\s*")([A-Za-z0-9._-]+)')
+
+
+def _trace_ids(line: str):
+    return set(TRACE_RE.findall(line))
+
 RESOURCE_ID_RE = re.compile(r"\b([a-z]+(?:_[a-z]+)*_\d+)\b")
 
 
@@ -62,8 +96,14 @@ class Evidence:
             cols = [c[1] for c in conn.execute(f'PRAGMA table_info("{table}")')]
             for row in conn.execute(f'SELECT * FROM "{table}"'):
                 rec = dict(zip(cols, row))
-                if any(self._matches(v, idents) for v in rec.values()):
+                if _deep_match(rec, idents):
                     rid = rec.get("resource_id")
+                    if not rid:
+                        for v in rec.values():
+                            p = _parse_json_maybe(v)
+                            if isinstance(p, dict) and p.get("resource_id"):
+                                rid = p["resource_id"]
+                                break
                     hits.append({
                         "file_id": file_row["file_id"],
                         "source": "sql",
@@ -123,6 +163,12 @@ class Evidence:
             if not found:
                 digits_line = norm_phone(line)
                 found = any(p and len(p) >= 7 and p in digits_line for p in idents["phones"])
+            if not found:
+                brace = line.find("{")
+                if brace >= 0:
+                    parsed = _parse_json_maybe(line[brace:])
+                    if parsed is not None and _deep_match(parsed, idents):
+                        found = True
             if found:
                 rids = RESOURCE_ID_RE.findall(line)
                 hits.append({
@@ -136,6 +182,40 @@ class Evidence:
                 })
         return hits
 
+
+    def propagate_traces(self, audit_at: str, hits: list) -> list:
+        """Log lines sharing a trace_id with a matched line are the same request, so they belong to the same user."""
+        text_files = [f for f in self.files_as_of(audit_at)
+                      if f["file_path"].endswith((".log", ".txt"))]
+        traces = set()
+        for h in hits:
+            if h.get("source") == "text":
+                traces |= _trace_ids(h["line"])
+        if not traces:
+            return hits
+        extra = []
+        for f in text_files:
+            path = self.dataset_dir / f["file_path"]
+            try:
+                lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+            except OSError:
+                continue
+            for lineno, line in enumerate(lines, 1):
+                ids = _trace_ids(line)
+                if ids & traces:
+                    rids = RESOURCE_ID_RE.findall(line)
+                    if rids:
+                        extra.append({
+                            "file_id": f["file_id"],
+                            "source": "text_trace",
+                            "table": None,
+                            "resource_id": rids[0],
+                            "resource_ids": rids,
+                            "line_no": lineno,
+                            "line": line,
+                        })
+        return hits + extra
+
     def find_all(self, audit_at: str, idents) -> list:
         hits = []
         for f in self.files_as_of(audit_at):
@@ -146,4 +226,4 @@ class Evidence:
                 hits.extend(self.find_json_hits(f, idents))
             elif p.endswith(".log") or p.endswith(".txt"):
                 hits.extend(self.find_text_hits(f, idents))
-        return hits
+        return self.propagate_traces(audit_at, hits)
