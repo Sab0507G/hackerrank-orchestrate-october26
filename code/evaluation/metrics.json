@@ -1,24 +1,23 @@
 {
   "sample": {
     "cases": 32,
-    "status_accuracy": 0.8125,
-    "status_correct": 26,
-    "step_precision": 0.7698,
-    "step_recall": 0.5544,
-    "step_f1": 0.6446,
-    "field_accuracy_on_matched_steps": 0.9299,
+    "status_accuracy": 0.9062,
+    "status_correct": 29,
+    "step_precision": 0.8559,
+    "step_recall": 0.5233,
+    "step_f1": 0.6495,
+    "field_accuracy_on_matched_steps": 0.9703,
     "sequence_accuracy": 0.0312,
     "split": {
       "dev_status_correct": 16,
       "dev_cases": 16,
-      "heldout_status_correct": 10,
+      "heldout_status_correct": 13,
       "heldout_cases": 16
     },
     "status_confusion_gold_to_pred": {
-      "COMPLETE->COMPLETE": 7,
+      "COMPLETE->COMPLETE": 10,
       "INCOMPLETE->INCOMPLETE": 19,
-      "INCOMPLETE->COMPLETE": 3,
-      "COMPLETE->INCOMPLETE": 3
+      "INCOMPLETE->COMPLETE": 3
     },
     "per_case": {
       "case_01": {
@@ -173,21 +172,21 @@
       },
       "case_26": {
         "gold": "COMPLETE",
-        "pred": "INCOMPLETE",
+        "pred": "COMPLETE",
         "steps_gold": 6,
-        "steps_pred": 9
+        "steps_pred": 2
       },
       "case_27": {
         "gold": "COMPLETE",
-        "pred": "INCOMPLETE",
+        "pred": "COMPLETE",
         "steps_gold": 6,
-        "steps_pred": 9
+        "steps_pred": 2
       },
       "case_28": {
         "gold": "COMPLETE",
-        "pred": "INCOMPLETE",
+        "pred": "COMPLETE",
         "steps_gold": 6,
-        "steps_pred": 9
+        "steps_pred": 2
       },
       "case_29": {
         "gold": "INCOMPLETE",
