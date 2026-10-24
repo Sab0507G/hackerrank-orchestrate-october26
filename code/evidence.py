@@ -200,6 +200,7 @@ class Evidence:
                     self._matches(v, idents) for v in node.values() if not isinstance(v, (dict, list))
                 ):
                     hits.append({
+                        "exposed": self.direct_identifier_present(node, idents),
                         "file_id": file_row["file_id"],
                         "source": "json",
                         "table": ctx.get("collection"),

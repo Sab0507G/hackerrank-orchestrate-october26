@@ -346,3 +346,25 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:38:14+05:30] JSON exposure uses direct identifiers
+
+User Prompt (verbatim, secrets redacted):
+try more features to increase
+
+Agent Response Summary:
+Made JSON evidence exposure depend on a direct identifier, matching the SQL rule, so tombstones that keep only user_id are not treated as exposed. Checked the development set only: still 16/16. Did not re-measure or inspect the held-out set, to avoid tuning against it. Regenerated output.csv (518 rows, validated) and rebuilt code.zip. Recommended adding team-authored custom cases with policy-derived labels as the next way to measure real generalization, rather than adding features tuned to the sample.
+
+Actions:
+* Patched code/evidence.py and code/pipeline.py (JSON exposure)
+* Checked development set (inline Python)
+* python3 code/main.py (regenerated output.csv)
+* Rebuilt /mnt/attach/outputs/code.zip
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

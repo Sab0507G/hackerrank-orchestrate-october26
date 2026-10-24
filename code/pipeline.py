@@ -43,7 +43,7 @@ def _case_resources(uid, audit_at, idents, ev, links):
         if h.get("source") == "handover":
             info["states"].append((h["state"], h["file_id"]))
             info["category"] = HANDOVER_CATEGORY.get(h["table"], info["category"])
-        elif h.get("exposed") or h.get("source") == "json":
+        elif h.get("exposed"):
             info["exposed"] = True
         if h.get("active"):
             info["active"] = True
