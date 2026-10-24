@@ -31,15 +31,36 @@ TREATED_STATES = {"ANONYMIZED", "REDACTED", "BLOCKED", "DISABLED"}
 ABSENT_STATES = {"NOT_FOUND", "ABSENT", "DELETED"}
 
 
+def _observed_time(h, file_times):
+    """Time of the observation: a line or snapshot time when available, else the file's capture time."""
+    if h.get("captured_at"):
+        return h["captured_at"]
+    line = h.get("line") or ""
+    if line[:4].isdigit() and "T" in line[:20]:
+        return line.split()[0].lstrip("- ").split("|")[0].strip()
+    return file_times.get(h["file_id"], "")
+
+
 def _case_resources(uid, audit_at, idents, ev, links):
-    """Per-resource evidence summary attributable to the user at audit_at."""
-    res = defaultdict(lambda: {"file_ids": set(), "exposed": False, "states": [], "category": None})
+    """Per-resource evidence summary attributable to the user at audit_at.
+
+    The state at audit_at is decided by the most recent observation no later than audit_at,
+    so an older 'present' sighting does not override a newer one.
+    """
+    file_times = {f["file_id"]: f["captured_at"] for f in ev.files}
+    res = defaultdict(lambda: {"file_ids": set(), "exposed": False, "states": [], "category": None,
+                               "latest_time": "", "latest_exposed": None})
     for h in ev.find_all(audit_at, idents):
         rid = h.get("resource_id")
         if not rid:
             continue
         info = res[rid]
         info["file_ids"].add(h["file_id"])
+        t = _observed_time(h, file_times)
+        if t and t <= audit_at and t >= info["latest_time"]:
+            info["latest_time"] = t
+            info["latest_exposed"] = bool(h.get("exposed") or h.get("present") or h.get("source") == "handover"
+                                          and h.get("state") in ("FOUND", "IDENTIFIABLE", "ACTIVE"))
         if h.get("source") == "handover":
             info["states"].append((h["state"], h["file_id"]))
             info["category"] = HANDOVER_CATEGORY.get(h["table"], info["category"])
@@ -101,6 +122,8 @@ def decide(request, idx, ev, links, classify_nonde=frozenset()):
                                   "evidence_id": evid})
             continue
         exposed = (state in EXPOSED_STATES) if state else info["exposed"]
+        if not state and info["latest_exposed"] is not None:
+            exposed = info["latest_exposed"]
         if category == "DATA_FLOW" and info.get("active"):
             exposed = True
         if state in TREATED_STATES:

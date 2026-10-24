@@ -653,3 +653,25 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:58:30+05:30] Time-aware state at audit_at
+
+User Prompt (verbatim, secrets redacted):
+think something different that we can do elsewhere to increase this
+
+Agent Response Summary:
+Identified that most score loss is in evidence reasoning, not intent (intent is about 2% of the full run). Applied a spec-required rule that was missing: the state at audit_at is decided by the most recent observation no later than audit_at, instead of any earlier sighting counting as present. Development stayed at 16/16. Measured the overall effect with evaluate.py; the held-out figure is still contaminated and is reported as such. Regenerated output.csv and rebuilt code.zip. No API cost.
+
+Actions:
+* Patched code/pipeline.py (_observed_time, latest-observation exposure)
+* python3 code/evaluation/evaluate.py
+* python3 code/main.py (regenerated output.csv)
+* Rebuilt /mnt/attach/outputs/code.zip
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
