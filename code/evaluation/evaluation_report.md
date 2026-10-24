@@ -76,3 +76,17 @@ Passed: 4 / 4.
 - **Gold relies on later evidence in one case.** For case_09 the answer key cites a log captured after audit_at. The spec forbids using it, so the pipeline excludes it.
 - **Non-English non-deletion requests.** Only a few phrases are covered.
 - **Weak step recall.** Recall is about 0.55, so even correct statuses often come with an incomplete step list.
+
+## 7. Request-intent classifier: limitation (phrase list only)
+
+The pipeline decides whether a request is a deletion with a phrase list (`code/request_intent.py`). No paid model is used, so the run costs nothing (see `usage_report.md`).
+
+| Set | Source | Result | Notes |
+| --- | --- | --- | --- |
+| Policy-derived (12) | Written before running | 7 / 12 on first run, 12 / 12 after fixes | No longer clean: failures were seen before fixing |
+| Fresh (12) | Written before running, languages it, hi, tr, ko, it, nl | 7 / 12 | Clean at time of writing |
+| Third (12) | Written before running, pl, id, ar, zh, es, de, en | 6 / 12 | Clean; all 6 non-deletion cases fail |
+
+Deletion cases pass in every set, but the gate defaults to deletion, so those passes do not test false negatives.
+
+**Conclusion:** the phrase list does not generalize to unseen languages or wording. The expected effect on the hidden set is that some non-deletion requests will be treated as deletions and given INCOMPLETE or COMPLETE steps when they should be NOT_APPLICABLE. An LLM classifier (`code/llm_intent.py`, scored by `code/evaluation/score_intent.py`) is included but was not run, because it needs a paid API key.
