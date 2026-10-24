@@ -43,3 +43,18 @@ Extracted PDF and OCR text is cached in `code/.cache/` and is regenerated on dem
 ## Known limitations
 
 See `evaluation/evaluation_report.md`, section 6.
+
+## Optional: LLM intent classifier (needs your API key)
+
+The request-intent gate can use an LLM instead of the phrase list. Without a key, the phrase list is used automatically.
+
+1. Get an API key from the Anthropic Console (console.anthropic.com, API Keys). Do not paste it into chats or commit it.
+2. Open a terminal in the repository root.
+3. Set the key for the current terminal session:
+   - Mac or Linux: `export ANTHROPIC_API_KEY="your-key"`
+   - Windows PowerShell: `$env:ANTHROPIC_API_KEY="your-key"`
+4. Score the classifier on the clean test set:
+   `python3 code/evaluation/score_intent.py code/evaluation/custom/third_test_cases.csv`
+5. Check the last lines: `mode=llm` means the model was used, and `intent accuracy` gives the score. `mode=phrase_fallback` means no key was found or a call failed.
+
+The classifier uses only the Python standard library and sends the request text to the Anthropic API.
