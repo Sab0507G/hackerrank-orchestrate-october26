@@ -155,3 +155,25 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:22:51+05:30] Handover states and exposure checks
+
+User Prompt (verbatim, secrets redacted):
+do correctly
+
+Agent Response Summary:
+Parsed the shift-handover status table as authoritative per-resource state (FOUND, IDENTIFIABLE, ACTIVE as exposed; NOT_FOUND as absent; ANONYMIZED, REDACTED, BLOCKED, DISABLED as treated). Changed SQL and JSON exposure to require a direct identifier (email, phone, hash, name), so tombstones that keep user_id no longer count as exposed. Sample status accuracy rose from 13/32 to 17/32. Stopped there: the remaining COMPLETE cases with no evidence need the account-to-user link, which the DELETE_RECORD activity can't provide without a time-window guess. I did not fit rules to the sample. output.csv regenerated and validated (518 rows, sorted, step numbering consistent).
+
+Actions:
+* Patched code/evidence.py (handover parser, direct-identifier check)
+* Rewrote decision logic in code/pipeline.py
+* Scored sample status and step sets (inline Python)
+* python3 code/main.py (regenerated output.csv)
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

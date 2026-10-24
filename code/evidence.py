@@ -49,6 +49,10 @@ TRACE_RE = re.compile(r'trace_id(?:=|"\s*:\s*")([A-Za-z0-9._-]+)')
 def _trace_ids(line: str):
     return set(TRACE_RE.findall(line))
 
+HANDOVER_RE = re.compile(
+    r"^-\s*(?P<ts>\S+)\s*\|\s*(?P<system>[^|]+?)\s*\|\s*(?P<rid>[^|]+?)\s*\|\s*(?P<category>[^|]+?)\s*\|\s*(?P<state>[^|]+?)\s*\|\s*(?P<ident>\S+)\s*$"
+)
+
 RESOURCE_ID_RE = re.compile(r"\b([a-z]+(?:_[a-z]+)*_\d+)\b")
 
 
@@ -86,6 +90,30 @@ class Evidence:
             return True
         return False
 
+    @staticmethod
+    def direct_identifier_present(rec, idents) -> bool:
+        """True if the record still carries an email, phone, hash, or name (user_id alone does not count)."""
+        def scan(obj, depth=0):
+            if depth > 12:
+                return False
+            if isinstance(obj, dict):
+                return any(scan(v, depth + 1) for v in obj.values())
+            if isinstance(obj, list):
+                return any(scan(v, depth + 1) for v in obj)
+            if isinstance(obj, str):
+                p = _parse_json_maybe(obj)
+                if p is not None:
+                    return scan(p, depth + 1)
+                low = obj.strip().lower()
+                if low in idents["emails"] or low in idents["email_hashes"]:
+                    return True
+                if low and low in idents.get("names", set()):
+                    return True
+                d = norm_phone(obj)
+                return bool(d) and len(d) >= 7 and d in idents["phones"]
+            return False
+        return scan(rec)
+
     def find_sql_hits(self, file_row, idents):
         hits = []
         conn = self._sql_db(file_row["file_id"], file_row["file_path"])
@@ -98,6 +126,7 @@ class Evidence:
                 rec = dict(zip(cols, row))
                 if _deep_match(rec, idents):
                     rid = rec.get("resource_id")
+                    exposed = self.direct_identifier_present(rec, idents)
                     if not rid:
                         for v in rec.values():
                             p = _parse_json_maybe(v)
@@ -105,6 +134,7 @@ class Evidence:
                                 rid = p["resource_id"]
                                 break
                     hits.append({
+                        "exposed": exposed,
                         "file_id": file_row["file_id"],
                         "source": "sql",
                         "table": table,
@@ -156,6 +186,22 @@ class Evidence:
         except OSError:
             return hits
         for lineno, line in enumerate(lines, 1):
+            hm = HANDOVER_RE.match(line.strip())
+            if hm:
+                ident = hm.group("ident").lower()
+                if ident in idents["emails"] or ident in idents["email_hashes"]:
+                    hits.append({
+                        "file_id": file_row["file_id"],
+                        "source": "handover",
+                        "table": hm.group("category").strip(),
+                        "resource_id": hm.group("rid").strip(),
+                        "resource_ids": [hm.group("rid").strip()],
+                        "state": hm.group("state").strip().upper(),
+                        "system": hm.group("system").strip(),
+                        "line_no": lineno,
+                        "line": line,
+                    })
+                continue
             low = line.lower()
             found = any(e in low for e in idents["emails"] if e) or any(
                 h in low for h in idents["email_hashes"] if h
