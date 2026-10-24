@@ -1,0 +1,13 @@
+case_id,email,requested_at,reported_status,reported_at,audit_at,request_text,expected_status,expected_user,purpose
+nx_01,nx.nomatch.01@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,"Chcę tylko dowiedzieć się, jakie dane o mnie przechowujecie. Proszę niczego nie usuwać.",NOT_APPLICABLE,,"Polish information request, no deletion"
+nx_02,nx.nomatch.02@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Saya ingin mengunduh salinan data saya. Jangan hapus akun saya.,NOT_APPLICABLE,,"Indonesian download copy, do not delete"
+nx_03,nx.nomatch.03@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,أريد نسخة من بياناتي الشخصية فقط، أرجو عدم حذف الحساب.,NOT_APPLICABLE,,"Arabic copy of data, do not delete account"
+nx_04,nx.nomatch.04@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,请帮我更新收货地址，账户请保留。,NOT_APPLICABLE,,"Chinese address update, keep account"
+nx_05,nx.nomatch.05@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,"Quisiera saber qué información tienen guardada sobre mí, pero no la borren.",NOT_APPLICABLE,,"Spanish information request, do not erase"
+nx_06,nx.nomatch.06@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please fix the spelling of my first name on the account; nothing else needs to change.,NOT_APPLICABLE,,English correction only
+nx_07,nx.nomatch.07@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Proszę całkowicie usunąć moje konto i wszystkie dane.,COMPLETE,,"Polish full deletion, unknown email"
+nx_08,nx.nomatch.08@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Hapus akun saya dan semua data pribadi saya secara permanen.,COMPLETE,,"Indonesian permanent deletion, unknown email"
+nx_09,nx.nomatch.09@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,يرجى حذف حسابي وجميع بياناتي نهائيًا.,COMPLETE,,"Arabic permanent deletion, unknown email"
+nx_10,nx.nomatch.10@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,请彻底删除我的账户和所有个人信息。,COMPLETE,,"Chinese full deletion, unknown email"
+nx_11,nx.nomatch.11@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Borren Sie bitte alle meine Daten und schließen Sie das Konto.,COMPLETE,,"German delete data and close, unknown email"
+nx_12,nx.nomatch.12@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please remove everything connected to me from your systems and close the account.,COMPLETE,,"English remove everything, unknown email"

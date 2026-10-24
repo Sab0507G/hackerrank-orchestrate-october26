@@ -29,6 +29,24 @@ NON_DELETION += [
     r"\bkeep my account (active|open)\b", r"\bkeep the account active\b", r"\bunsubscribe\b",
 ]
 
+# Language coverage for non-deletion intent (Italian, Dutch, Turkish, Korean, romanized Hindi)
+NON_DELETION += [
+    # Italian
+    r"\bnon (cancellate|eliminate|cancellare|eliminare|chiudete|chiudere)\b", r"\bvoglio sapere\b",
+    r"\bcopia dei miei dati\b", r"\besportare\b", r"\baggiornare\b", r"\btenete (il|l')account\b",
+    # Dutch
+    r"\bverwijder (mijn account )?niet\b", r"\bniet verwijderen\b", r"\bwil weten\b", r"\bkopie van mijn gegevens\b",
+    r"\bexporteren\b", r"\bbijwerken\b", r"\blaat (het|mijn) account\b",
+    # Turkish
+    r"\bsilmeyin\b", r"\bsilmeyiniz\b", r"\bkapatmayın\b", r"\bbilgi (almak|istiyorum)\b", r"\bkopyasını\b",
+    r"\bgüncellemek istiyorum\b", r"\bdışa aktar\b",
+    # Korean
+    r"삭제하지", r"그대로 두", r"사본", r"정보 (확인|보기)", r"비밀번호 재설정", r"업데이트", r"계정은 유지",
+    # Romanized Hindi
+    r"\bdelete mat\b", r"\bdelete nahi\b", r"\bband mat\b", r"\bcopy bhejo\b", r"\bdata dekhna\b",
+    r"\breset karna\b", r"\bupdate karna\b", r"\bkeep karna\b", r"\bmat karna\b", r"\bjankari chahiye\b",
+]
+
 DELETION = [
     r"\bdelete\b", r"\berase\b", r"\bremove (my|the|this) (account|profile|data|personal)",
     r"\bclose (my|the|this) account\b", r"\bpermanent(ly)? (account )?deletion\b",

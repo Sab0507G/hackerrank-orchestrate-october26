@@ -490,3 +490,26 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:45:25+05:30] Multilingual non-deletion coverage and clean third test set
+
+User Prompt (verbatim, secrets redacted):
+yes
+
+Agent Response Summary:
+Added non-deletion phrasing for Italian, Dutch, Turkish, Korean, and romanized Hindi, based on general phrasing, not on the fresh-set text. Full-set non-deletion count stayed at 9, and all 32 sample cases still pass the gate. Wrote a third set (code/evaluation/custom/third_test_cases.csv) in Polish, Indonesian, Arabic, Chinese, Spanish, German, and English, labels fixed before running. Clean result: 6/12. All six non-deletion cases fail, so the phrase-list approach does not generalize to new languages or new wording. Deletion cases pass, but as before the gate defaults to deletion. Recommended a classifier that is not a phrase list (for example an LLM with a regex fallback) and asked for an API key, read from an environment variable, before building it.
+
+Actions:
+* Patched code/request_intent.py (Italian, Dutch, Turkish, Korean, romanized Hindi)
+* Checked full-set non-deletion count and sample gate (inline Python)
+* Wrote code/evaluation/custom/third_test_cases.csv (labels fixed before running)
+* Scored third set (inline Python)
+* Appended this log entry
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26/code
+worktree=main
+parent_agent=none
