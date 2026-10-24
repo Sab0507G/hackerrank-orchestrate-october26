@@ -737,3 +737,26 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T19:04:52+05:30] Contact-lookup and document-attachment rules
+
+User Prompt (verbatim, secrets redacted):
+do
+
+Agent Response Summary:
+Listed remaining development gaps (3 findings, 3 deletions, 2 anonymize checks). Traced three of them to two general rules: a record reached through a contact lookup (event contains 'contact') is the subject's own contact entry and gets REPORT_REMAINING_RECORD/DELETE; a support resource named in a document (PDF attachment) is a support attachment and gets DELETE. These rules were motivated by development failures, so they are tuning on development. Development status 16/16; development step recall 0.733 -> 0.813, precision 0.821 -> 0.910. Remaining development gaps are absence checks for unlinked deleted accounts and two anonymized analytics records with no identifier link. Regenerated output and metrics; rebuilt code.zip. Held-out figures are contaminated.
+
+Actions:
+* Patched code/evidence.py (event capture; document attachment marker)
+* Patched code/pipeline.py (contact and attachment rules)
+* python3 code/evaluation/evaluate.py
+* python3 code/main.py
+* Rebuilt /mnt/attach/outputs/code.zip
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

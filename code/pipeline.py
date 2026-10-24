@@ -41,6 +41,10 @@ def _observed_time(h, file_times):
     return file_times.get(h["file_id"], "")
 
 
+def rid_is_support(rid: str) -> bool:
+    return (rid or "").startswith("support_")
+
+
 def _case_resources(uid, audit_at, idents, ev, links):
     """Per-resource evidence summary attributable to the user at audit_at.
 
@@ -70,6 +74,10 @@ def _case_resources(uid, audit_at, idents, ev, links):
             info["active"] = True
         if h.get("present"):
             info["exposed"] = True
+        if h.get("event") and "contact" in h["event"]:
+            info["contact"] = True
+        if h.get("source") == "document" and rid_is_support(rid):
+            info["attachment"] = True
     for rid, ls in links.items():
         if any(u == uid and t <= audit_at for t, u in ls):
             res[rid]["file_ids"]  # linked resource, presence evaluated below
@@ -146,6 +154,13 @@ def decide(request, idx, ev, links, classify_nonde=frozenset()):
         elif category == "BACKUP_ARCHIVE":
             findings.append({"system_id": system, "resource_id": rid,
                              "operation": "REPORT_RESTORE_RISK", "evidence_id": evid})
+        elif info.get("contact") and category in (ANONYMIZE_CATEGORIES | REDACT_CATEGORIES):
+            # A record reached through a contact lookup is the subject's own contact entry: delete it.
+            findings.append({"system_id": system, "resource_id": rid,
+                             "operation": "REPORT_REMAINING_RECORD", "evidence_id": evid})
+        elif info.get("attachment") and category == "SUPPORT_MESSAGE":
+            findings.append({"system_id": "support_platform", "resource_id": rid,
+                             "operation": "REPORT_REMAINING_RECORD", "evidence_id": evid})
         elif category in ANONYMIZE_CATEGORIES:
             findings.append({"system_id": system, "resource_id": rid, "operation": "REPORT_EXPOSED_PII",
                              "evidence_id": evid, "remedy": "ANONYMIZE_RECORD",

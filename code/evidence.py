@@ -92,6 +92,8 @@ def _log_shows_present(line: str) -> bool:
         return True
     return bool(MARKER_NOT_FOUND_RE.search(line))
 
+EVENT_RE = re.compile(r"\bevent=([a-z_]+)")
+
 RESOURCE_ID_RE = re.compile(r"\b([a-z]+(?:_[a-z]+)*_\d+)\b")
 
 
@@ -238,6 +240,7 @@ class Evidence:
             hits.append({
                 "file_id": file_row["file_id"],
                 "source": "document",
+                "event": "attachment",
                 "table": None,
                 "resource_id": rid,
                 "resource_ids": rids,
@@ -290,6 +293,7 @@ class Evidence:
                 hits.append({
                     "active": bool(LIVE_FLOW_RE.search(line)),
                     "present": _log_shows_present(line),
+                    "event": (EVENT_RE.search(line).group(1) if EVENT_RE.search(line) else ""),
                     "file_id": file_row["file_id"],
                     "source": "text",
                     "table": None,
