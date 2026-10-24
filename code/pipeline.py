@@ -63,7 +63,11 @@ def decide(request, idx, ev, links, classify_nonde=frozenset()):
     # Deletion must be authorized by the request text; evidence alone never makes a case deletion.
     if not is_deletion_request(request["request_text"]):
         return "NOT_APPLICABLE", []
-    uid = sorted(idx.resolve(request["email"]))[0]
+    matches = sorted(idx.resolve(request["email"]))
+    if not matches:
+        # Authorized deletion for an email with no identity or evidence: nothing to remove or verify.
+        return "COMPLETE", []
+    uid = matches[0]
     I = idx.identifiers(uid, request["audit_at"])
     idents = {
         "emails": set(I["emails"]),

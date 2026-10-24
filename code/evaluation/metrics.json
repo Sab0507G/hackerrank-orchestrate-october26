@@ -1,0 +1,262 @@
+{
+  "sample": {
+    "cases": 32,
+    "status_accuracy": 0.6562,
+    "status_correct": 21,
+    "step_precision": 0.8362,
+    "step_recall": 0.5026,
+    "step_f1": 0.6278,
+    "field_accuracy_on_matched_steps": 0.8969,
+    "sequence_accuracy": 0.0312,
+    "status_confusion_gold_to_pred": {
+      "COMPLETE->COMPLETE": 7,
+      "INCOMPLETE->INCOMPLETE": 14,
+      "INCOMPLETE->COMPLETE": 8,
+      "COMPLETE->INCOMPLETE": 3
+    },
+    "per_case": {
+      "case_01": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 1,
+        "steps_pred": 0
+      },
+      "case_02": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 1,
+        "steps_pred": 0
+      },
+      "case_03": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 3,
+        "steps_pred": 2
+      },
+      "case_04": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 2,
+        "steps_pred": 0
+      },
+      "case_05": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 3,
+        "steps_pred": 3
+      },
+      "case_06": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 4,
+        "steps_pred": 3
+      },
+      "case_07": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 4,
+        "steps_pred": 3
+      },
+      "case_08": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 4,
+        "steps_pred": 3
+      },
+      "case_09": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 5,
+        "steps_pred": 3
+      },
+      "case_10": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 4,
+        "steps_pred": 1
+      },
+      "case_11": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 14,
+        "steps_pred": 12
+      },
+      "case_12": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 5,
+        "steps_pred": 3
+      },
+      "case_13": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 8,
+        "steps_pred": 6
+      },
+      "case_14": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 5,
+        "steps_pred": 3
+      },
+      "case_15": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 5,
+        "steps_pred": 2
+      },
+      "case_16": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 7,
+        "steps_pred": 6
+      },
+      "case_17": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 5,
+        "steps_pred": 3
+      },
+      "case_18": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 14,
+        "steps_pred": 3
+      },
+      "case_19": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 8,
+        "steps_pred": 4
+      },
+      "case_20": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 8,
+        "steps_pred": 1
+      },
+      "case_21": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 3,
+        "steps_pred": 1
+      },
+      "case_22": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 8,
+        "steps_pred": 6
+      },
+      "case_23": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 8,
+        "steps_pred": 6
+      },
+      "case_24": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 7,
+        "steps_pred": 3
+      },
+      "case_25": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 3,
+        "steps_pred": 1
+      },
+      "case_26": {
+        "gold": "COMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 6,
+        "steps_pred": 6
+      },
+      "case_27": {
+        "gold": "COMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 6,
+        "steps_pred": 6
+      },
+      "case_28": {
+        "gold": "COMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 6,
+        "steps_pred": 6
+      },
+      "case_29": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 14,
+        "steps_pred": 9
+      },
+      "case_30": {
+        "gold": "INCOMPLETE",
+        "pred": "INCOMPLETE",
+        "steps_gold": 14,
+        "steps_pred": 9
+      },
+      "case_31": {
+        "gold": "COMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 3,
+        "steps_pred": 1
+      },
+      "case_32": {
+        "gold": "INCOMPLETE",
+        "pred": "COMPLETE",
+        "steps_gold": 5,
+        "steps_pred": 1
+      }
+    }
+  },
+  "custom": {
+    "cases": 4,
+    "passed": 4,
+    "results": [
+      {
+        "case_id": "custom_01",
+        "purpose": "Spanish non-deletion phrasing must not be treated as deletion",
+        "expected_status": "NOT_APPLICABLE",
+        "pred_status": "NOT_APPLICABLE",
+        "status_ok": true,
+        "expected_user": "user_523",
+        "resolved_user": "user_523",
+        "user_ok": true,
+        "crashed": false
+      },
+      {
+        "case_id": "custom_02",
+        "purpose": "Unknown email must not crash; no identity or evidence means nothing remains",
+        "expected_status": "COMPLETE",
+        "pred_status": "COMPLETE",
+        "status_ok": true,
+        "expected_user": "(none)",
+        "resolved_user": "(none)",
+        "user_ok": true,
+        "crashed": false
+      },
+      {
+        "case_id": "custom_03",
+        "purpose": "Historical (old) email must resolve to the same user_id; status not hand-labelled",
+        "expected_status": "(not hand-labelled)",
+        "pred_status": "INCOMPLETE",
+        "status_ok": true,
+        "expected_user": "user_523",
+        "resolved_user": "user_523",
+        "user_ok": true,
+        "crashed": false
+      },
+      {
+        "case_id": "custom_04",
+        "purpose": "English access/export request must not be treated as deletion",
+        "expected_status": "NOT_APPLICABLE",
+        "pred_status": "NOT_APPLICABLE",
+        "status_ok": true,
+        "expected_user": "user_523",
+        "resolved_user": "user_523",
+        "user_ok": true,
+        "crashed": false
+      }
+    ]
+  }
+}

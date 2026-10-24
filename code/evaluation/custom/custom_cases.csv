@@ -1,0 +1,5 @@
+case_id,email,requested_at,reported_status,reported_at,audit_at,request_text,expected_status,expected_user,purpose
+custom_01,o.walker66@yahoo.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Quiero descargar mis datos. No borren nada.,NOT_APPLICABLE,user_523,Spanish non-deletion phrasing must not be treated as deletion
+custom_02,nobody.registered.here@example.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please delete my account.,COMPLETE,,Unknown email must not crash; no identity or evidence means nothing remains
+custom_03,o.walker6695@yahoo.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please delete my account and all data linked to it.,,user_523,Historical (old) email must resolve to the same user_id; status not hand-labelled
+custom_04,o.walker66@yahoo.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please send me a copy of my invoices. I still use the account.,NOT_APPLICABLE,user_523,English access/export request must not be treated as deletion

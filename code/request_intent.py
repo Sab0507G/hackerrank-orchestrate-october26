@@ -16,6 +16,7 @@ NON_DELETION = [
     r"\bchange the email\b", r"\bpromotional\b", r"\bmarketing lists?\b", r"\bunsubscribe\b",
     r"\bcan'?t access\b", r"\bwhat personal information\b", r"\bsend me a copy\b",
     r"\bhelp resetting\b", r"\bopt.?out\b",
+    r"\bno (borres|elimines|cierres|cambies)\b", r"\bdescargar mis\b", r"\bquiero (una )?copia\b",
 ]
 
 DELETION = [

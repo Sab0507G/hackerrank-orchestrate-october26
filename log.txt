@@ -279,3 +279,27 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:32:56+05:30] Required deliverables: evaluation workflow, reports, README, code.zip
+
+User Prompt (verbatim, secrets redacted):
+ok do all the required things when completes tell me
+
+Agent Response Summary:
+Built the evaluation workflow (code/evaluation/evaluate.py) with status accuracy, step precision/recall/F1, field accuracy, sequence accuracy, and four team-authored custom cases. Found and fixed an unknown-email crash and missing Spanish non-deletion phrasing while writing the custom cases. Wrote evaluation/evaluation_report.md, evaluation/usage_report.md (zero model calls, zero tokens, zero cost), and code/README.md. Built code.zip (code/ without cache, bytecode, or dataset). Results on sample: status 21/32, step F1 0.63, field accuracy 0.90, sequence accuracy 0.03, custom 4/4. Regenerated output.csv (518 rows, validated). The solution is still below what I would consider a passing level, and the reports say so.
+
+Actions:
+* Wrote code/evaluation/evaluate.py, custom/custom_cases.csv, metrics.json
+* Patched code/pipeline.py (unknown email) and code/request_intent.py (Spanish phrasing)
+* Wrote code/evaluation/evaluation_report.md, usage_report.md, code/README.md
+* Built /mnt/attach/outputs/code.zip (code/ minus .cache and __pycache__)
+* python3 code/evaluation/evaluate.py
+* python3 code/main.py (regenerated output.csv)
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
