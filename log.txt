@@ -114,3 +114,25 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:20:16+05:30] Rules engine, pipeline, and baseline output.csv
+
+User Prompt (verbatim, secrets redacted):
+yes
+
+Agent Response Summary:
+Added code/rules.py (prefix-to-category mapping, contract-ordered step generation), code/pipeline.py (identity, evidence, rules per case), and code/main.py (writes root output.csv). Baseline status accuracy on the 32 sample cases is 13/32. Most errors are missed exposures (12 INCOMPLETE predicted COMPLETE), which points to unparsed PDF and image evidence and weak activity-based linking. The full run wrote 518 schema-valid rows (283 COMPLETE, 224 INCOMPLETE, 11 NOT_APPLICABLE), but the COMPLETE count is likely too high and the file is a baseline, not a final answer.
+
+Actions:
+* Wrote code/rules.py, code/pipeline.py, code/main.py
+* python3 code/main.py (wrote output.csv, 518 rows)
+* Scored status against dataset/sample_output.csv
+* Appended this log entry
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
