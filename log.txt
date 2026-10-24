@@ -469,3 +469,24 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:44:21+05:30] Fresh unseen test set
+
+User Prompt (verbatim, secrets redacted):
+do
+
+Agent Response Summary:
+Wrote a fresh set of 12 cases (code/evaluation/custom/fresh_test_cases.csv) in Italian, Dutch, Turkish, Korean, Hindi-English, and English, with labels fixed before running. Result: 7/12. All five failures are non-deletion requests in languages the classifier does not cover (Italian, Dutch, Turkish, Korean, Hindi-English). All six deletion cases pass, but the deletion gate defaults to deletion, so those passes do not test false negatives. Failures left unfixed to keep this set usable as a measurement.
+
+Actions:
+* Wrote code/evaluation/custom/fresh_test_cases.csv (labels written before running)
+* Scored with inline Python (pipeline.decide)
+* Appended this log entry
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
