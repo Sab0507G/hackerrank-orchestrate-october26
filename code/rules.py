@@ -92,6 +92,10 @@ def build_steps(findings, verifications, status):
         for f in findings:
             steps.extend(_remediation_for(f))
         steps.extend(_verification_for(findings))
+        # Checks that must pass afterward also cover records that stay as they are (retained, absent).
+        # They describe future state, so they carry no evidence_id.
+        for v in verifications:
+            steps.append(dict(v, evidence_id=""))
 
     def sort_key(s):
         return (

@@ -259,7 +259,7 @@ class Evidence:
             hm = HANDOVER_RE.match(line.strip())
             if hm:
                 ident = hm.group("ident").lower()
-                if ident in idents["emails"] or ident in idents["email_hashes"]:
+                if ident in idents["emails"] or ident in idents["email_hashes"] or ident in idents["user_ids"]:
                     hits.append({
                         "file_id": file_row["file_id"],
                         "source": "handover",

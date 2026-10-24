@@ -3,11 +3,11 @@
     "cases": 32,
     "status_accuracy": 0.9062,
     "status_correct": 29,
-    "step_precision": 0.8559,
-    "step_recall": 0.5233,
-    "step_f1": 0.6495,
-    "field_accuracy_on_matched_steps": 0.9703,
-    "sequence_accuracy": 0.0312,
+    "step_precision": 0.8582,
+    "step_recall": 0.5959,
+    "step_f1": 0.7034,
+    "field_accuracy_on_matched_steps": 0.9739,
+    "sequence_accuracy": 0.1562,
     "split": {
       "dev_status_correct": 16,
       "dev_cases": 16,
@@ -84,37 +84,37 @@
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 14,
-        "steps_pred": 12
+        "steps_pred": 14
       },
       "case_12": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 5,
-        "steps_pred": 3
+        "steps_pred": 5
       },
       "case_13": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 8,
-        "steps_pred": 6
+        "steps_pred": 8
       },
       "case_14": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 5,
-        "steps_pred": 3
+        "steps_pred": 5
       },
       "case_15": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 5,
-        "steps_pred": 6
+        "steps_pred": 8
       },
       "case_16": {
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 7,
-        "steps_pred": 6
+        "steps_pred": 7
       },
       "case_17": {
         "gold": "INCOMPLETE",
@@ -126,7 +126,7 @@
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 14,
-        "steps_pred": 3
+        "steps_pred": 6
       },
       "case_19": {
         "gold": "INCOMPLETE",
@@ -138,7 +138,7 @@
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 8,
-        "steps_pred": 3
+        "steps_pred": 4
       },
       "case_21": {
         "gold": "COMPLETE",
@@ -150,7 +150,7 @@
         "gold": "INCOMPLETE",
         "pred": "INCOMPLETE",
         "steps_gold": 8,
-        "steps_pred": 6
+        "steps_pred": 7
       },
       "case_23": {
         "gold": "INCOMPLETE",

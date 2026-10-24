@@ -714,3 +714,26 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T19:03:22+05:30] Retained and absent checks in INCOMPLETE plans; handover user ids
+
+User Prompt (verbatim, secrets redacted):
+not stop keep building
+
+Agent Response Summary:
+Measured development-only step gaps. The largest fixable gap was VERIFY_RECORD_PRESENT for retained audit records: rules.build_steps dropped all non-finding verifications for INCOMPLETE cases, although the spec requires the checks that must pass afterward. Added those checks with an empty evidence_id. Also made the handover parser accept user IDs as identifiers (handover rows use user_XX). Development status stayed 16/16; development step recall rose from 0.587 to 0.733 and precision from 0.786 to 0.821. Remaining dev gaps are mostly VERIFY_RECORD_ABSENT for deleted accounts that have no linkable record. Regenerated output and metrics, rebuilt code.zip. Held-out figures in metrics are contaminated and reported as such.
+
+Actions:
+* Patched code/rules.py (build_steps: include verification checks for INCOMPLETE)
+* Patched code/evidence.py (handover parser accepts user_ids)
+* python3 code/evaluation/evaluate.py
+* python3 code/main.py
+* Rebuilt /mnt/attach/outputs/code.zip
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
