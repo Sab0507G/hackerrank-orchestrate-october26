@@ -445,3 +445,27 @@ branch=main
 repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T18:43:43+05:30] Policy-derived test set and multilingual non-deletion phrasing
+
+User Prompt (verbatim, secrets redacted):
+do
+
+Agent Response Summary:
+Wrote 12 new test cases (code/evaluation/custom/policy_test_cases.csv). Six are non-deletion requests (labels NOT_APPLICABLE from the spec), six are deletion requests from emails with no record anywhere (labels COMPLETE with no steps). Labels were fixed before running. First run: 7/12. The failures were non-deletion requests in German, French, Japanese, Portuguese, and one English export request. Added general non-deletion phrasing for those cases. The set is now 12/12 but is no longer an untouched test set, since I saw its failures before fixing them. Development remains 16/16. The full-run non-deletion set is unchanged (9 cases). Held-out was not re-measured. Regenerated output.csv and code.zip.
+
+Actions:
+* Wrote code/evaluation/custom/policy_test_cases.csv (labels written before running)
+* Patched code/request_intent.py (multilingual and export phrasing)
+* Checked policy set and development set (inline Python)
+* Checked full-set non-deletion count (inline Python)
+* python3 code/main.py (regenerated output.csv)
+* Rebuilt /mnt/attach/outputs/code.zip
+
+Context:
+tool=Claude Code
+model=claude-haiku-5-5
+branch=main
+repo_root=/home/claude/sab0507g/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

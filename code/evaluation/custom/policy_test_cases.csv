@@ -1,0 +1,13 @@
+case_id,email,requested_at,reported_status,reported_at,audit_at,request_text,expected_status,expected_user,purpose
+pt_01,amina.elmasri@gmail.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,"Ich möchte nur wissen, welche persönlichen Daten Sie über mich gespeichert haben.",NOT_APPLICABLE,,German information request
+pt_02,mateo.rios@outlook.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,"Je souhaite recevoir une copie de mes données personnelles. Ne supprimez rien, merci.",NOT_APPLICABLE,,"French copy request, explicitly no deletion"
+pt_03,oliver-bennett@gmail.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,アカウントは削除しないでください。注文履歴のコピーを送ってください。,NOT_APPLICABLE,,"Japanese: do not delete, send order-history copy"
+pt_04,nadia.ionescu@yahoo.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,"Quero atualizar meu endereço de entrega, mas mantenha a conta ativa.",NOT_APPLICABLE,,"Portuguese address update, keep account"
+pt_05,thandiwe.n@gmail.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please unsubscribe me from the newsletter but keep my account active.,NOT_APPLICABLE,,"English unsubscribe, keep account"
+pt_06,priya.raman@gmail.com,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Can you export my order history as a CSV? I am not closing my account.,NOT_APPLICABLE,,"English export, not closing"
+pt_07,pt.nomatch.01@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Bitte löschen Sie mein Konto vollständig.,COMPLETE,,"German deletion, unknown email"
+pt_08,pt.nomatch.02@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,"Por favor, elimine mi cuenta y todos mis datos.",COMPLETE,,"Spanish deletion, unknown email"
+pt_09,pt.nomatch.03@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Veuillez supprimer définitivement mon compte.,COMPLETE,,"French deletion, unknown email"
+pt_10,pt.nomatch.04@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,アカウントを削除してください。,COMPLETE,,"Japanese deletion, unknown email"
+pt_11,pt.nomatch.05@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Please permanently erase my account.,COMPLETE,,"English erase, unknown email"
+pt_12,pt.nomatch.06@example.org,2026-09-01T10:00:00Z,NOT_STARTED,2026-09-01T10:00:00Z,2026-09-10T10:00:00Z,Delete everything you have about me.,COMPLETE,,"English delete everything, unknown email"
